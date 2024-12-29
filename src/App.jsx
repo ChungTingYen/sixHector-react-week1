@@ -6,7 +6,7 @@ import "./App.css";
 import {} from "react";
 
 function App() {
-  const [tempProduct, setTempProduct] = React.useState(null);
+  const [tempProduct, setTempProduct] = React.useState([]);
   const [products, setProducts] = React.useState([
     {
       category: "甜甜圈",
