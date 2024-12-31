@@ -12,7 +12,9 @@ const LoadingDots = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  return <h2 className="h2 text-center">產品列表載入中{".".repeat(dots)}</h2>;
+  return  <div className="row mt-5 mb-5">
+            <h2 className="text-center">產品列表載入中{".".repeat(dots)}</h2>
+          </div>;
 };
 
 export default LoadingDots;

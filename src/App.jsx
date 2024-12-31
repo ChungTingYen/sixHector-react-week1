@@ -39,7 +39,7 @@ function App() {
   return (
     <>
       {initRef.current ? (
-        <div className="row mt-5 mb-5">
+        <div className="row mt-5 mb-5 mx-3">
           <div className="col-md-6 mb-3">
             <h2>產品列表</h2>
             <table className="table">
