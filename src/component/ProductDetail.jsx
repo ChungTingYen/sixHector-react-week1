@@ -38,9 +38,9 @@ const ProductDetail = (props) => {
               <img
                 key={index}
                 src={image}
-                className="card-img-top primary-image"
+                className="card-img-top primary-image me-2 mb-1"
                 alt="`更多圖片${index}`"
-                style={{ width: "300px", height: "300px" }}
+                style={{ width: "250px", height: "250px" }}
               />
             ))}
           </div>
