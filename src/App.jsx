@@ -4,7 +4,6 @@ import Products from "./component/Products";
 import ProductDetail from "./component/ProductDetail";
 import Loading from "./component/Loading";
 import { getProductDatas } from "./utils/functions";
-import "./App.css";
 
 function App() {
   const [tempProduct, setTempProduct] = React.useState(null);
@@ -40,13 +39,13 @@ function App() {
   return (
     <>
       {initRef.current ? (
-        <div className="row mt-5">
-          <div className="col-md-6">
+        <div className="row mt-5 mb-5">
+          <div className="col-md-6 mb-3">
             <h2>產品列表</h2>
             <table className="table">
               <thead>
                 <tr>
-                  <th>產品名稱</th>
+                  <th style={{width:'25%'}}>產品名稱</th>
                   <th>原價</th>
                   <th>售價</th>
                   <th>是否啟用</th>
@@ -68,6 +67,7 @@ function App() {
             <h2>單一產品細節</h2>
             {tempProduct ? (
               <ProductDetail
+                title={tempProduct.title}
                 imageUrl={tempProduct.imageUrl}
                 description={tempProduct.description}
                 content={tempProduct.content}

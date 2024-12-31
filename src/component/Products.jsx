@@ -13,10 +13,11 @@ const Product = (props) => {
     <>
       {
         <tr>
-          <td>{title}</td>
+          <th scope="row"><td>{title}</td></th>
+          {/* <td>{title}</td> */}
           <td>{origin_price}</td>
           <td>{price}</td>
-          <td>{is_enabled}</td>
+          <td>{is_enabled?'Y':'N'}</td>
           <td>
             <button className="btn btn-primary" onClick={atGetProduct}>
               查看細節

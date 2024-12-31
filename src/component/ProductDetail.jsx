@@ -3,6 +3,7 @@ import React from "react";
 
 const ProductDetail = (props) => {
   const {
+    title,
     imageUrl,
     description,
     content,
@@ -22,12 +23,11 @@ const ProductDetail = (props) => {
         />
         <div className="card-body">
           <h5 className="card-title">
-            {category}
-            <span className="badge bg-primary ms-2">{}</span>
+            {title}<span className="badge bg-primary ms-2">{category}</span>
           </h5>
           <p className="card-text">商品描述：{description}</p>
           <p className="card-text">商品內容：{content}</p>
-          <div className="d-flex justify-content-center align-items-center">
+          <div className="d-flex">
             <p className="card-text text-secondary">
               <del>{origin_price}</del>元 / {price} 元
             </p>
