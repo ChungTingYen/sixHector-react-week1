@@ -10,7 +10,6 @@ import * as bootstrap from "bootstrap";
 function App() {
   const [tempProduct, setTempProduct] = React.useState(null);
   const [products, setProducts] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(false);
   const initRef = useRef(false);
   const onGetProduct = useCallback(
     (productId) => {

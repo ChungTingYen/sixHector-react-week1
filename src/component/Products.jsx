@@ -17,7 +17,11 @@ const Product = (props) => {
           <td>{price}</td>
           <td>{is_enabled ? "Y" : "N"}</td>
           <td>
-            <button className="btn btn-primary" onClick={atGetProduct}>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={atGetProduct}
+            >
               查看細節
             </button>
           </td>

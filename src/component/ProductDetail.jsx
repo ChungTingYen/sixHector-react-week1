@@ -51,6 +51,7 @@ const ProductDetail = (props) => {
                   maxWidth: "250px",
                   maxHeight: "250px",
                   objectFit: "cover",
+                  cursor: "pointer", // 這裡設置光標為手指圖樣
                 }}
                 onClick={() => handleImageClick(image)}
               />
