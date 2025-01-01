@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
-import React from "react";
-
+import React, { useRef, useState } from "react";
+import Modal from "./Modal";
 const ProductDetail = (props) => {
+  const initRef = useRef(false);
   const {
     title,
     imageUrl,
@@ -12,6 +13,11 @@ const ProductDetail = (props) => {
     imagesUrl,
     category,
   } = props;
+  const handleImageClick = (src) => {
+    modalRef.current.setImage(src);
+    modalRef.current.open();
+  };
+  const modalRef = useRef(null);
   return (
     <>
       <div className="card mb-3" style={{ border: "none" }}>
@@ -23,7 +29,8 @@ const ProductDetail = (props) => {
         />
         <div className="card-body">
           <h5 className="card-title">
-            {title}<span className="badge bg-primary ms-2">{category}</span>
+            {title}
+            <span className="badge bg-primary ms-2">{category}</span>
           </h5>
           <p className="card-text">商品描述：{description}</p>
           <p className="card-text">商品內容：{content}</p>
@@ -39,13 +46,19 @@ const ProductDetail = (props) => {
                 key={index}
                 src={image}
                 className="card-img-top primary-image me-2 mb-1"
-                alt="`更多圖片${index}`"
-                style={{ width: "250px", height: "250px" }}
+                alt={`更多圖片${index}`}
+                style={{
+                  maxWidth: "250px",
+                  maxHeight: "250px",
+                  objectFit: "cover",
+                }}
+                onClick={() => handleImageClick(image)}
               />
             ))}
           </div>
         </div>
       </div>
+      <Modal ref={modalRef} />
     </>
   );
 };
