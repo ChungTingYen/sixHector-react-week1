@@ -2,7 +2,6 @@
 import React, { useRef, useState } from "react";
 import Modal from "./Modal";
 const ProductDetail = (props) => {
-  const initRef = useRef(false);
   const {
     title,
     imageUrl,
@@ -13,11 +12,14 @@ const ProductDetail = (props) => {
     imagesUrl,
     category,
   } = props;
-  const handleImageClick = (src) => {
-    modalRef.current.setImage(src);
+  const handleImageClick = (imageSrc) => {
+    modalRef.current.setModalImage(imageSrc);
     modalRef.current.open();
+    imgSrcRef.current.src = imageSrc;
+    
   };
   const modalRef = useRef(null);
+  const imgSrcRef = useRef(null);
   return (
     <>
       <div className="card mb-3" style={{ border: "none" }}>
@@ -26,6 +28,7 @@ const ProductDetail = (props) => {
           className="card-img-top primary-image"
           alt="主圖"
           style={{ width: "400px", height: "400px" }}
+          ref={imgSrcRef}
         />
         <div className="card-body">
           <h5 className="card-title">
@@ -48,8 +51,8 @@ const ProductDetail = (props) => {
                 className="card-img-top primary-image me-2 mb-1"
                 alt={`更多圖片${index}`}
                 style={{
-                  maxWidth: "250px",
-                  maxHeight: "250px",
+                  width: "250px",
+                  height: "250px",
                   objectFit: "cover",
                   cursor: "pointer", // 這裡設置光標為手指圖樣
                 }}
@@ -59,7 +62,9 @@ const ProductDetail = (props) => {
           </div>
         </div>
       </div>
-      <Modal ref={modalRef} />
+      <Modal ref={modalRef} modalBodyText='商品放大圖' 
+        modalSize={{ width: "600px", height: "600px" }}
+        modalImgSize={{  width: "500px",height: "500px" }}/>
     </>
   );
 };

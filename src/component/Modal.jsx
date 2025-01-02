@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/display-name */
 import React, {
   useRef,
@@ -10,46 +11,68 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import * as bootstrap from "bootstrap";
 
 const Modal = forwardRef((props, ref) => {
+  const { modalBodyText,modalSize,modalImgSize } = props;
   const modalDivRef = useRef(null);
   const modalRef = useRef(null);
   const initRef = useRef(false);
   const [imageSrc, setImageSrc] = useState("");
-
+  // const restoreStyle = () => {
+  //   // 清除 modal 陰影
+  //   document.querySelectorAll(".modal-backdrop").forEach((el) => el.remove());
+  //   // 強制應用恢復滾動條的樣式
+  //   document.body.style.overflow = "auto";
+  //   console.log('restoreStyle');
+  // };
   useEffect(() => {
-    if (initRef.current) {
-      modalRef.current = new bootstrap.Modal(modalDivRef.current);
-      initRef.current && modalRef.current.show();
-      const handleHidden = () => {
-        document
-          .querySelectorAll(".modal-backdrop")
-          .forEach((el) => el.remove());
-        // 手動重置下拉選單狀態
-        const dropdowns = document.querySelectorAll(".dropdown-toggle");
-        dropdowns.forEach((dropdown) => {
-          new bootstrap.Dropdown(dropdown).dispose();
-          new bootstrap.Dropdown(dropdown);
-        });
-      };
-      const modalElement = document.getElementById("myModal");
-      modalElement.addEventListener("hidden.bs.modal", handleHidden);
-      return () => {
-        modalElement.removeEventListener("hidden.bs.modal", handleHidden);
-      };
-    }
-  }, [imageSrc]);
-
+    modalRef.current = new bootstrap.Modal(modalDivRef.current);
+  }, []);
+  //原本的寫法
+  // useEffect(() => {
+  //   modalRef.current = new bootstrap.Modal(modalDivRef.current);
+  //   if (initRef.current) {
+  //     openModal(); 
+  //     document.querySelectorAll(".modal-backdrop").forEach((el) => el.remove());
+  //   }
+  //   console.log('initRef.current=',initRef.current);
+  //   const modalElement = document.getElementById("myModal"); 
+  //   modalElement.addEventListener("hidden.bs.modal", null); 
+  //   return () => {
+  //     modalElement.removeEventListener("hidden.bs.modal", restoreStyle); 
+  //   }; 
+  // }, [imageSrc]);
+  const closeModal = ()=>{
+    modalRef.current.hide();
+    // restoreStyle();
+  };
+  const openModal = ()=>{
+    modalRef.current.show();
+  };
+  const setImage = (src)=>{
+    setImageSrc(src);
+    initRef.current = true;
+  };
   useImperativeHandle(ref, () => {
     return {
+      //open close2種寫法
       open() {
-        modalRef.current.show();
+        openModal();
       },
-      close() {
-        modalRef.current.hide();
-      },
-      setImage(src) {
-        setImageSrc(src);
-        initRef.current = true;
-      },
+      close:closeModal
+      ,
+      setModalImage:setImage
+      // setModalImage(src){
+      //   setImageSrc(src);
+      //   initRef.current = true;
+      // },
+      ,toggleFooter(visible) {
+        if (visible) {
+          modalDivRef.current.querySelector(".modal-footer").style.display = 'block'; 
+        } else {
+          modalDivRef.current.querySelector(".modal-footer").style.display = 'none'; 
+        } 
+      }
+      //把modalDivRef傳出去給父層控制
+      ,modalDivRef
     };
   });
   return (
@@ -64,12 +87,14 @@ const Modal = forwardRef((props, ref) => {
       >
         <div
           className="modal-dialog"
-          style={{ maxWidth: "600px", maxHeight: "600px" }}
+          // style={{ width: "600px", height: "600px" }}
+          style={modalSize}
         >
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="exampleModalLabel">
-                商品放大圖
+                {/* 商品放大圖 */}
+                {modalBodyText}
               </h1>
               <button
                 type="button"
@@ -80,20 +105,23 @@ const Modal = forwardRef((props, ref) => {
             </div>
             <div
               className="modal-body d-flex justify-content-center align-items-center"
-              style={{ height: "500px" }}
+              style={modalImgSize}
+              id='modalBody'
             >
               <img
                 src={imageSrc}
                 className="img-fluid"
-                alt="Selected"
+                alt="載入中"
                 style={{ maxWidth: "100%", maxHeight: "100%" }}
+                id="picture"
               />
             </div>
-            <div className="modal-footer">
+            <div className="modal-footer" >
               <button
                 type="button"
                 className="btn btn-secondary"
-                data-bs-dismiss="modal"
+                // data-bs-dismiss="modal"
+                onClick={closeModal}
               >
                 Close
               </button>
